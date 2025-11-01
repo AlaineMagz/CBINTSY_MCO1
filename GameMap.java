@@ -1,20 +1,31 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 public class GameMap {
     
     private int widthByRoom;
     private int heightByRoom;
     private Room[][] roomList;
     private Room exitRoom;
+    private Random random = new Random();
 
-    public GameMap(int width, int height){
+    public GameMap(int width, int height, int roomWidth, int roomHeight){
 
         this.widthByRoom = width;
         this.heightByRoom = height;
 
-        this.generateRooms();
+        //Pick exit room;
+        int x = random.nextInt(roomHeight);
+
+        this.generateRooms(roomWidth, roomHeight);
 
     }
 
-    public void generateRooms(){
+    public void generateRooms(int roomWidth, int roomHeight){
+
+        int enemyCount;
+        int itemCount;
+        ArrayList<String> doorDirs = new ArrayList<>();
 
         this.roomList = new Room[this.heightByRoom][this.widthByRoom];
 
@@ -22,7 +33,25 @@ public class GameMap {
 
             for(int x = 0; x < this.widthByRoom; x++){
 
-                this.roomList[y][x] = new Room(5, 5, 0, 0, null);
+                if(y != 0){
+                    doorDirs.add("up");
+                }
+
+                if(y < heightByRoom - 1){
+                    doorDirs.add("down");
+                }
+
+                if(x != 0){
+                    doorDirs.add("left");
+                }
+
+                if(x < widthByRoom - 1){
+                    doorDirs.add("right");
+                }
+
+                enemyCount = random.nextInt(3);
+                itemCount = random.nextInt(3);
+                this.roomList[y][x] = new Room(x, y, roomWidth + 2, roomHeight + 2, enemyCount, itemCount, doorDirs);
 
             }
 

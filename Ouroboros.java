@@ -8,8 +8,7 @@ public class Ouroboros{
     
     public static void main(String[] args) {
             
-        map = new GameMap(7, 5);
-        map.displayMap();
+        initializeGame();
 
     }
 
@@ -19,7 +18,8 @@ public class Ouroboros{
         gameRunning = true;
 
         //Generates Map;
-
+        map = new GameMap(7, 5, 7, 7);
+        map.displayMap();
 
     }
 
