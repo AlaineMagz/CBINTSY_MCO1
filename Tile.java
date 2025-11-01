@@ -34,6 +34,7 @@ public class Tile {
 
         }
 
+        this.entity = e;
         return e;
     }
 

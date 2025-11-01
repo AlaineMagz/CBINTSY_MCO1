@@ -10,7 +10,7 @@ public class Weapon extends Item{
     }
 
     public void equipWeapon(PlayerAI player){
-        //TODO
+        player.setEquippedWeapon(this);
     }
 
     public int getDamage(){

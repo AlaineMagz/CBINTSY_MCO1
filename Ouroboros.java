@@ -4,6 +4,7 @@ public class Ouroboros{
 
     private static GameMap map;
     private static ArrayList<Entity> entities;
+    private static PlayerAI player;
     private static boolean gameRunning;
     
     public static void main(String[] args) {
@@ -19,6 +20,7 @@ public class Ouroboros{
 
         //Generates Map;
         map = new GameMap(7, 5, 7, 7);
+        entities = map.getAllEntities();
         map.displayMap();
 
     }

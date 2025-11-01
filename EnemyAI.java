@@ -13,12 +13,42 @@ public class EnemyAI extends AI{
 
     }
 
-    public void takeTurn(){
-        //TODO
+    public void takeTurn(PlayerAI player){
+        
+        if(this.isHostile){
+            chasePlayer(player);
+        }
+
     }
 
     public void chasePlayer(PlayerAI player){
-        //TODO
+        
+        switch(this.behavior){
+
+            case "mobile":
+
+            //TODO
+
+            break;
+
+            case "immobile":
+
+
+
+            break;
+
+            default: 
+
+
+
+            break;
+
+        }
+
+    }
+
+    public String getEnemyType(){
+        return this.type;
     }
 
 }

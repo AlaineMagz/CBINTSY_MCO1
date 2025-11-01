@@ -8,23 +8,28 @@ public class Room {
     private int height;
     private Tile[][] tileMap;
     private ArrayList<String> doorDirection;
+    private ArrayList<Entity> entityList;
     private boolean hasEnemies;
     private boolean hasItems;
+    private int exitSide;
     private Random random = new Random();
 
-    public Room(int x, int y, int width, int height, int enemyCount, int itemCount, ArrayList<String> doorDir){
+    public Room(int x, int y, int width, int height, int enemyCount, int itemCount, ArrayList<String> doorDir, int exitSide){
 
         this.roomPos = new Position(x, y);
         this.width = width;
         this.height = height;
 
         this.generateTileMap();
+
+        this.entityList = new ArrayList<>();
         this.generateEntities(enemyCount, itemCount);
 
         this.hasEnemies = (enemyCount > 0) ? true : false;
         this.hasItems = (itemCount > 0) ? true : false;
 
         this.doorDirection = doorDir;
+        this.exitSide = exitSide;
         this.setDoors();
 
     }
@@ -71,6 +76,26 @@ public class Room {
             this.tileMap[y][width - 1] = new Tile(width - 1, y, "door");
         }
 
+        if(this.exitSide == 0){
+            int x = width/2;
+            this.tileMap[0][x] = new Tile(x, 0, "XitDoor");
+        }
+
+        if(this.exitSide == 1){
+            int x = width/2;
+            this.tileMap[height - 1][x] = new Tile(x, height - 1, "XitDoor");
+        }
+
+        if(this.exitSide == 2){
+            int y = height/2;
+            this.tileMap[y][0] = new Tile(0, y, "XitDoor");
+        }
+
+        if(this.exitSide == 3){
+            int y = height/2;
+            this.tileMap[y][width - 1] = new Tile(width - 1, y, "XitDoor");
+        }
+
     }
 
     //TODO
@@ -82,7 +107,7 @@ public class Room {
             int y = random.nextInt(height - 4) + 2;
 
             if(this.tileMap[y][x].isWalkable()){
-                this.tileMap[y][x].spawnEntity("enemy");
+                this.entityList.add(this.tileMap[y][x].spawnEntity("enemy"));
             }else{
                 i--;
             }
@@ -139,6 +164,16 @@ public class Room {
 
     public Position getRoomPos(){
         return this.roomPos;
+    }
+
+    public ArrayList<Entity> getEntityList(){
+        return this.entityList;
+    }
+
+    public Tile checkTile(Position pos){
+
+        return this.tileMap[pos.getY()][pos.getX()];
+
     }
 
 }

@@ -15,13 +15,29 @@ public class GameMap {
         this.heightByRoom = height;
 
         //Pick exit room;
-        int x = random.nextInt(roomHeight);
+        int x;
+        int y;
+        int s = random.nextInt(4);
 
-        this.generateRooms(roomWidth, roomHeight);
+        if(s == 0){
+            x = random.nextInt(width);
+            y = 0;
+        }else if(s == 1){
+            x = random.nextInt(width);
+            y = height - 1;
+        }else if(s == 2){
+            x = 0;
+            y = random.nextInt(height);
+        }else{
+            x = width - 1;
+            y = random.nextInt(height);
+        }
+
+        this.generateRooms(roomWidth, roomHeight, x, y, s);
 
     }
 
-    public void generateRooms(int roomWidth, int roomHeight){
+    public void generateRooms(int roomWidth, int roomHeight, int xExitPos, int yExitPos, int exitSide){
 
         int enemyCount;
         int itemCount;
@@ -51,11 +67,31 @@ public class GameMap {
 
                 enemyCount = random.nextInt(3);
                 itemCount = random.nextInt(3);
-                this.roomList[y][x] = new Room(x, y, roomWidth + 2, roomHeight + 2, enemyCount, itemCount, doorDirs);
+                this.roomList[y][x] = new Room(x, y, roomWidth + 2, roomHeight + 2, enemyCount, itemCount, doorDirs, -1);
+                doorDirs.clear();
 
             }
 
         }
+
+        if(yExitPos != 0){
+            doorDirs.add("up");
+        }
+
+        if(yExitPos < heightByRoom - 1){
+            doorDirs.add("down");
+        }
+
+        if(xExitPos != 0){
+            doorDirs.add("left");
+        }
+
+        if(xExitPos < widthByRoom - 1){
+            doorDirs.add("right");
+        }
+
+        this.roomList[yExitPos][xExitPos] = new Room(xExitPos, yExitPos, roomWidth, roomHeight, 0, 0, doorDirs, exitSide);
+        this.exitRoom = this.roomList[yExitPos][xExitPos];
 
     }
 
@@ -85,6 +121,28 @@ public class GameMap {
         }
 
         this.roomList[0][0].displayRoom();
+
+    }
+
+    public Room getExitRoom(){
+        return this.exitRoom;
+    }
+
+    public ArrayList<Entity> getAllEntities(){
+
+        ArrayList<Entity> entities = new ArrayList<>();
+
+        for(int y = 0; y < this.heightByRoom; y++){
+
+            for(int x = 0; x < this.widthByRoom; x++){
+
+                entities.addAll(this.roomList[y][x].getEntityList());
+
+            }
+
+        }
+
+        return entities;
 
     }
 

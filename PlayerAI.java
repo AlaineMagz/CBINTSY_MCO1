@@ -31,4 +31,12 @@ public class PlayerAI extends AI{
         return this.getBaseAttackStat() + this.equippedWeapon.getDamage();
     }
 
+    public void setEquippedWeapon(Weapon w){
+        this.equippedWeapon = w;
+    }
+
+    public ArrayList<Item> getInventory(){
+        return this.inventory;
+    }
+
 }
