@@ -33,14 +33,12 @@ public class Ouroboros{
 
     }
 
-    //TODO
     public static boolean checkWinCondition(){
-        return false;
+        return player.getCurrentRoom().checkTile(player.getPosition()).getType() == "XitDoor";
     }
 
-    //TODO
     public static boolean checkLoseCondition(){
-        return false;
+        return !player.isAlive();
     }
 
 }

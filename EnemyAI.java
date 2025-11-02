@@ -4,9 +4,9 @@ public class EnemyAI extends AI{
     private String behavior;
     private boolean isHostile;
 
-    public EnemyAI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int dS, int ap, int maxAP, String type, String behavior){
+    public EnemyAI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int ap, int maxAP, String type, String behavior){
 
-        super(currentRoom, pos, hp, maxHP, aS, dS, ap, maxAP);
+        super(currentRoom, pos, hp, maxHP, aS, ap, maxAP);
         this.type = type;
         this.behavior = behavior;
         this.isHostile = false;

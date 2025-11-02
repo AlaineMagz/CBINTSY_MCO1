@@ -43,9 +43,9 @@ public class Room {
             for(int x = 0; x < this.width; x++){
 
                 if(x == 0 || x == width - 1 || y == 0 || y == height - 1){
-                    this.tileMap[y][x] = new Tile(x, y, "wall");
+                    this.tileMap[y][x] = new Tile(this, x, y, "wall");
                 }else{
-                    this.tileMap[y][x] = new Tile(x, y, "floor");
+                    this.tileMap[y][x] = new Tile(this, x, y, "floor");
                 }
 
             }
@@ -58,42 +58,42 @@ public class Room {
 
         if(doorDirection.contains("up")){
             int x = width/2;
-            this.tileMap[0][x] = new Tile(x, 0, "door");
+            this.tileMap[0][x] = new Tile(this, x, 0, "door");
         }
 
         if(doorDirection.contains("down")){
             int x = width/2;
-            this.tileMap[height - 1][x] = new Tile(x, height - 1, "door");
+            this.tileMap[height - 1][x] = new Tile(this, x, height - 1, "door");
         }
 
         if(doorDirection.contains("left")){
             int y = height/2;
-            this.tileMap[y][0] = new Tile(0, y, "door");
+            this.tileMap[y][0] = new Tile(this, 0, y, "door");
         }
 
         if(doorDirection.contains("right")){
             int y = height/2;
-            this.tileMap[y][width - 1] = new Tile(width - 1, y, "door");
+            this.tileMap[y][width - 1] = new Tile(this, width - 1, y, "door");
         }
 
         if(this.exitSide == 0){
             int x = width/2;
-            this.tileMap[0][x] = new Tile(x, 0, "XitDoor");
+            this.tileMap[0][x] = new Tile(this, x, 0, "XitDoor");
         }
 
         if(this.exitSide == 1){
             int x = width/2;
-            this.tileMap[height - 1][x] = new Tile(x, height - 1, "XitDoor");
+            this.tileMap[height - 1][x] = new Tile(this, x, height - 1, "XitDoor");
         }
 
         if(this.exitSide == 2){
             int y = height/2;
-            this.tileMap[y][0] = new Tile(0, y, "XitDoor");
+            this.tileMap[y][0] = new Tile(this, 0, y, "XitDoor");
         }
 
         if(this.exitSide == 3){
             int y = height/2;
-            this.tileMap[y][width - 1] = new Tile(width - 1, y, "XitDoor");
+            this.tileMap[y][width - 1] = new Tile(this, width - 1, y, "XitDoor");
         }
 
     }

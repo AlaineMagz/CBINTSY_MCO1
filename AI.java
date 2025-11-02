@@ -3,17 +3,15 @@ public abstract class AI extends Entity{
     private int health;
     private int maxHealth;
     private int attackStat;
-    private int defenseStat;
     private int actionPoints;
     private int maxAP;
 
-    public AI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int dS, int ap, int maxAP){
+    public AI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int ap, int maxAP){
 
         super(currentRoom, pos);
         this.health = hp;
         this.maxHealth = maxHP;
         this.attackStat = aS;
-        this.defenseStat = dS;
         this.actionPoints = ap;
         this.maxAP = maxAP;
 
@@ -43,10 +41,6 @@ public abstract class AI extends Entity{
 
     public void increaseBaseAttackStat(int incAmount){
         this.attackStat += incAmount;
-    }
-
-    public int getDefenseStat(){
-        return this.defenseStat;
     }
 
     public int getActionPoints(){
