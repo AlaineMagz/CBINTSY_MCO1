@@ -6,7 +6,7 @@ public class EnemyAI extends AI{
 
     public EnemyAI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int ap, int maxAP, String type, String behavior){
 
-        super(currentRoom, pos, hp, maxHP, aS, ap, maxAP);
+        super(currentRoom, pos, hp, maxHP, aS, ap, maxAP, "up");
         this.type = type;
         this.behavior = behavior;
         this.isHostile = false;

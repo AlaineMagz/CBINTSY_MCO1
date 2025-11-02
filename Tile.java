@@ -98,6 +98,25 @@ public class Tile {
         return this.type;
     }
 
+    public void setEntity(Entity e){
+
+        if(e instanceof Item){
+            this.entityType = "item";
+        }else if(e instanceof EnemyAI){
+            this.entityType = "enemy";
+        }else if(e instanceof PlayerAI){
+            this.entityType = "player";
+        }
+
+        this.entity = e;
+
+    }
+
+    public void clearTile(){
+        this.entityType = "empty";
+        this.entity = null;
+    }
+
     public String getEntityType(){
         return this.entityType;
     }

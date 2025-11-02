@@ -5,8 +5,9 @@ public abstract class AI extends Entity{
     private int attackStat;
     private int actionPoints;
     private int maxAP;
+    private String facingDirection;
 
-    public AI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int ap, int maxAP){
+    public AI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int ap, int maxAP, String facingDir){
 
         super(currentRoom, pos);
         this.health = hp;
@@ -14,6 +15,7 @@ public abstract class AI extends Entity{
         this.attackStat = aS;
         this.actionPoints = ap;
         this.maxAP = maxAP;
+        this.facingDirection = facingDir;
 
     }
 
@@ -53,6 +55,43 @@ public abstract class AI extends Entity{
 
     public void replenishActionPoints(){
         this.actionPoints = this.maxAP;
+    }
+
+    public String getDirection(){
+        return this.facingDirection;
+    }
+
+    public void setDirection(String dir){
+        this.facingDirection = dir;
+    }
+
+    public void moveForward(){
+
+        this.useActionPoint();
+
+        Tile currentTile = this.getCurrentRoom().checkTile(this.getPosition());
+        Tile newTile = this.getCurrentRoom().checkTile(this.getPosition().getAdjacent(facingDirection));
+
+        currentTile.clearTile();
+        newTile.setEntity(this);
+
+        this.setPosition(newTile.getPos());
+
+    }
+
+    public void rotate(String newDir){
+        this.useActionPoint();
+        this.facingDirection = newDir;
+    }
+
+    public void attack(int damage){
+
+        Tile attackTile = this.getCurrentRoom().checkTile(this.getPosition().getAdjacent(facingDirection));
+
+        if(attackTile.getEntityType() == "enemy"){
+            ((AI) attackTile.getEntity()).takeDamage(damage);
+        }
+
     }
 
 }

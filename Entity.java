@@ -14,8 +14,16 @@ public abstract class Entity {
         return this.currentRoom;
     }
 
+    public void setCurrentRoom(Room newRoom){
+        this.currentRoom = newRoom;
+    }
+
     public Position getPosition(){
         return this.position;
+    }
+
+    public void setPosition(Position newPos){
+        this.position = newPos;
     }
 
 }
