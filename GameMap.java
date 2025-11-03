@@ -91,7 +91,7 @@ public class GameMap {
             doorDirs.add("right");
         }
 
-        this.roomList[yExitPos][xExitPos] = new Room(this, xExitPos, yExitPos, roomWidth, roomHeight, 0, 0, doorDirs, exitSide);
+        this.roomList[yExitPos][xExitPos] = new Room(this, xExitPos, yExitPos, roomWidth + 2, roomHeight + 2, 0, 0, doorDirs, exitSide);
         this.exitRoom = this.roomList[yExitPos][xExitPos];
 
     }

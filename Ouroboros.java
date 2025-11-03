@@ -25,7 +25,7 @@ public class Ouroboros{
         System.out.println("MAP GENERATED");
         entities = map.getAllEntities();
         System.out.println("ENTITIES GENERATED");
-        player = ((PlayerAI) map.getExitRoom().checkTile(new Position(3, 3)).spawnEntity("player"));
+        player = ((PlayerAI) map.getExitRoom().checkTile(new Position(4, 4)).spawnEntity("player"));
         System.out.println("PLAYER SPAWNED");
         map.displayMap();
 
@@ -64,16 +64,17 @@ public class Ouroboros{
     public static void processTurn(){
         System.out.println("\n--- New Turn ---");
         
-        // Player takes turn
-        player.takeTurn();
-        player.replenishActionPoints();
-
-        checkEnemyDeath();
-        checkDoors();
-        
         // Display current map state
         map.displayMap();
         player.getCurrentRoom().displayRoom();
+
+        // Player takes turn
+        player.takeTurn();
+        player.replenishActionPoints();
+        
+        checkEnemyDeath();
+
+        checkDoors();
     }
 
     public static void checkEnemyDeath(){
