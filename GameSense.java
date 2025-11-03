@@ -278,7 +278,7 @@ public class GameSense {
         
         Tile frontTile = currentRoom.checkTile(frontPos);
         
-        result.whatIsIt = "empty";
+        result.whatIsIt = frontTile.getType();
 
         if (frontTile.getEntityType().equals("enemy")) {
             result.hasEnemy = true;
@@ -288,8 +288,6 @@ public class GameSense {
             result.hasItem = true;
             result.whatIsIt = "item";
             result.position = frontPos;
-        } else if (!frontTile.isWalkable()) {
-            result.whatIsIt = "wall";
         }
         
         return result;
