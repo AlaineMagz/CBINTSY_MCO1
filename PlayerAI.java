@@ -6,12 +6,14 @@ public class PlayerAI extends AI {
     private GameSense gameSense;
     private ArrayList<Item> inventory;
     private Weapon equippedWeapon;
+    private boolean hasKey;
 
     public PlayerAI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int ap, int maxAP, Weapon startingWeapon, GameMap gameMap) {
         super(currentRoom, pos, hp, maxHP, aS, ap, maxAP, "up");
         this.inventory = new ArrayList<>();
         this.equippedWeapon = startingWeapon;
         this.gameSense = new GameSense(gameMap, this);
+        this.hasKey = false;
     }
     
     public void takeTurn() {
@@ -145,6 +147,58 @@ public class PlayerAI extends AI {
 
     public ArrayList<Item> getInventory(){
         return this.inventory;
+    }
+
+    public void pickupKey(){
+
+        Tile t = this.getCurrentRoom().checkTile(this.getPosition());
+
+        if(t.getEntityType() == "key"){
+            t.clearTile();
+            this.hasKey = true;
+        }
+
+    }
+
+    public boolean hasKey(){
+        return this.hasKey;
+    }
+
+    public void changeRoom(){
+
+        Position originalPos = this.getPosition();
+        Room originalRoom = this.getCurrentRoom();
+
+        Position newPosition;
+        Room newRoom;
+
+        if(originalPos.getX() == 0){
+            newPosition = new Position(originalRoom.getWidth() - 1, originalPos.getY());
+            newRoom = originalRoom.getMap().getRoomList()[originalRoom.getRoomPos().getY()][originalRoom.getRoomPos().getX() - 1];
+        }else if(originalPos.getX() == originalRoom.getWidth() - 1){
+            newPosition = new Position(0, originalPos.getY());
+            newRoom = originalRoom.getMap().getRoomList()[originalRoom.getRoomPos().getY()][originalRoom.getRoomPos().getX() + 1];
+        }else if(originalPos.getY() == 0){
+            newPosition = new Position(originalPos.getX(), originalRoom.getHeight() - 1);
+            newRoom = originalRoom.getMap().getRoomList()[originalRoom.getRoomPos().getY() - 1][originalRoom.getRoomPos().getX()];
+        }else{
+            newPosition = new Position(originalPos.getX(), 0);
+            newRoom = originalRoom.getMap().getRoomList()[originalRoom.getRoomPos().getY() + 1][originalRoom.getRoomPos().getX()];
+        }
+
+        //Set Departing Room to Peaceful;
+        if(originalRoom.findLastDoor() != null){
+            originalRoom.findLastDoor().setType("door");
+        }
+        originalRoom.makeAllEnemiesSleep();
+        originalRoom.checkTile(originalPos).clearTile();
+
+        //Place player in new room;
+        newRoom.checkTile(newPosition).setEntity(this);
+        newRoom.checkTile(newPosition).setType("lastDoor");
+        this.setCurrentRoom(newRoom);
+        this.setPosition(newPosition);
+
     }
 
 }

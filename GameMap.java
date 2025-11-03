@@ -33,10 +33,8 @@ public class GameMap {
             y = random.nextInt(height);
         }
 
-        x = 0;
-        y = 0;
-        s = 0;
         this.generateRooms(roomWidth, roomHeight, x, y, s);
+        this.spawnKey(x, y, roomWidth, roomHeight);
 
     }
 
@@ -123,7 +121,32 @@ public class GameMap {
 
         }
 
-        this.roomList[0][0].displayRoom();
+    }
+
+    public void spawnKey(int xExitPos, int yExitPos, int roomWidth, int roomHeight){
+
+        int x;
+        int y;
+        boolean running = true;
+
+        while(running){
+
+            x = random.nextInt(this.widthByRoom);
+            y = random.nextInt(this.heightByRoom);
+
+            if(x != xExitPos && y != yExitPos){
+
+                x = random.nextInt(roomWidth - 4) + 2;
+                y = random.nextInt(roomHeight - 4) + 2;
+                
+                if(this.roomList[y][x].checkTile(new Position(x, y)).getEntityType() == "empty"){
+                    this.roomList[y][x].checkTile(new Position(x, y)).spawnEntity("key");
+                    running = false;
+                }
+                
+            }
+
+        }
 
     }
 
@@ -147,6 +170,10 @@ public class GameMap {
 
         return entities;
 
+    }
+
+    public Room[][] getRoomList(){
+        return this.roomList;
     }
 
 }

@@ -9,6 +9,7 @@ public class Ouroboros{
     
     public static void main(String[] args) {
             
+        System.out.println("HELLO WORLD");
         initializeGame();
         gameLoop();
 
@@ -21,10 +22,11 @@ public class Ouroboros{
 
         //Generates Map;
         map = new GameMap(7, 5, 7, 7);
+        System.out.println("MAP GENERATED");
         entities = map.getAllEntities();
-        player = ((PlayerAI) map.getExitRoom().checkTile(new Position(1, 1)).spawnEntity("player"));
-        entities.add(map.getExitRoom().checkTile(new Position(1, 3)).spawnEntity("enemy"));
-        entities.add(map.getExitRoom().checkTile(new Position(3, 1)).spawnEntity("enemy"));
+        System.out.println("ENTITIES GENERATED");
+        player = ((PlayerAI) map.getExitRoom().checkTile(new Position(3, 3)).spawnEntity("player"));
+        System.out.println("PLAYER SPAWNED");
         map.displayMap();
 
     }
@@ -67,9 +69,11 @@ public class Ouroboros{
         player.replenishActionPoints();
 
         checkEnemyDeath();
+        checkDoors();
         
         // Display current map state
         map.displayMap();
+        player.getCurrentRoom().displayRoom();
     }
 
     public static void checkEnemyDeath(){
@@ -100,6 +104,12 @@ public class Ouroboros{
     /*for each entity, If entity.getEntityType is equal to enemy then If entity.isalive = false uhh type uhh entity.getroom.checkTile(enemy.getPosistion). and your supposed to remove
      * the entity tile by deleting the entity. 
     */
+
+    public static void checkDoors(){
+        if(player.getCurrentRoom().checkTile(player.getPosition()).getType() == "door"){
+            player.changeRoom();
+        }
+    }
 
     public static boolean checkWinCondition(){
         return player.getCurrentRoom().checkTile(player.getPosition()).getType() == "XitDoor";

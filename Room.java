@@ -100,7 +100,6 @@ public class Room {
 
     }
 
-    //TODO
     public void generateEntities(int enemyCount, int itemCount){
 
         for(int i = 0; i < enemyCount; i++){
@@ -151,6 +150,36 @@ public class Room {
             }
 
             System.out.println("");
+
+        }
+
+    }
+
+    public Tile findLastDoor(){
+
+        for(int y = 0; y < this.height; y++){
+
+            for(int x = 0; x < this.width; x++){
+
+                if(this.tileMap[y][x].getType() == "lastDoor"){
+                    return this.tileMap[y][x];
+                }
+
+            }
+
+        }
+
+        return null;
+
+    }
+
+    public void makeAllEnemiesSleep(){
+
+        for(Entity e : this.entityList){
+
+            if(e instanceof EnemyAI){
+                ((EnemyAI)e).setIsHostile(false);
+            }
 
         }
 

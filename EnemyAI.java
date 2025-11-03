@@ -51,4 +51,8 @@ public class EnemyAI extends AI{
         return this.type;
     }
 
+    public void setIsHostile(boolean b){
+        this.isHostile = b;
+    }
+
 }

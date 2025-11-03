@@ -26,6 +26,7 @@ public class Tile {
         switch(type){
             case "floor": return true;
             case "item": return true;
+            case "XitDoor" : return true;
         }
         return false;
     }
@@ -85,6 +86,10 @@ public class Tile {
 
             e = new PlayerAI(room, pos, 80, 80, 4, 2, 2, null, this.room.getMap());
 
+        }else if(type == "key"){
+
+            e = new Consumable(room, pos, "Key", "Key used for escaping the dungeon.", 0, 0);
+
         }
 
         this.entity = e;
@@ -124,6 +129,10 @@ public class Tile {
 
     public Entity getEntity(){
         return this.entity;
+    }
+
+    public void setType(String type){
+        this.type = type;
     }
 
 }

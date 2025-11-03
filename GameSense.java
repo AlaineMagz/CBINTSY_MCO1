@@ -51,8 +51,8 @@ public class GameSense {
             result.hasItem = true;
             result.whatIsIt = "item";
             result.position = frontPos;
-        } else {
-            
+        } else if(frontTile.getType().equals("wall")){
+            result.whatIsIt = "wall";
         }
         
         return result;
@@ -270,6 +270,7 @@ public class GameSense {
     public void printGameInfo() {
         System.out.println("=== GAME INFO ===");
         System.out.println("Health: " + player.getHealth() + "/" + player.getMaxHealth());
+        System.out.println("Current Room: " + player.getCurrentRoom().getRoomPos().getCoordinates());
         System.out.println("Position: (" + player.getPosition().getX() + "," + player.getPosition().getY() + ")");
         System.out.println("Facing: " + player.getDirection() + " -> " + this.player.getPosition().getAdjacent(this.player.getDirection()).getCoordinates());
         
