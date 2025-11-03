@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Ouroboros{
 
@@ -6,12 +7,16 @@ public class Ouroboros{
     private static ArrayList<Entity> entities;
     private static PlayerAI player;
     private static boolean gameRunning;
+    private static String chosenSpeed;
+    private static String chosenAlgo;
+    private static Scanner scanner;
     
     public static void main(String[] args) {
             
-        System.out.println("HELLO WORLD");
         initializeGame();
         gameLoop();
+
+        scanner.close();
 
     }
 
@@ -20,6 +25,34 @@ public class Ouroboros{
         //Sets gameRunning to True;
         gameRunning = true;
 
+        scanner = new Scanner(System.in);
+
+        //Prompts for which search algo to use;
+        System.out.println("Please select your simulation mode:");
+        System.out.println("[1] Fast");
+        System.out.println("[2 / Any Other Number] Slow");
+        System.out.print("Please enter the number of your choice: ");
+        int x = scanner.nextInt();
+
+        if(x == 1){
+            chosenSpeed = "fast";
+        }else{
+            chosenSpeed = "slow";
+        }
+        
+        System.out.println("Please select your preffered search algorithm:");
+        System.out.println("[1] DFS");
+        System.out.println("[2 / Any Other Number] BFS");
+        System.out.print("Please enter the number of your choice: ");
+        x = scanner.nextInt();
+        scanner.nextLine();
+
+        if(x == 1){
+            chosenAlgo = "dfs";
+        }else{
+            chosenAlgo = "bfs";
+        }
+
         //Generates Map;
         map = new GameMap(7, 5, 7, 7);
         System.out.println("MAP GENERATED");
@@ -27,7 +60,6 @@ public class Ouroboros{
         System.out.println("ENTITIES GENERATED");
         player = ((PlayerAI) map.getExitRoom().checkTile(new Position(4, 4)).spawnEntity("player"));
         System.out.println("PLAYER SPAWNED");
-        map.displayMap();
 
     }
 
@@ -50,12 +82,23 @@ public class Ouroboros{
                 break;
             }
             
-            // Small delay to make turns readable
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(chosenSpeed == "fast"){
+
+                // Small delay to make turns readable
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }else{
+
+                System.out.println();
+                System.out.print("Press enter to continue...");
+                scanner.nextLine();
+
             }
+
         }
         
         System.out.println("Game ended.");
