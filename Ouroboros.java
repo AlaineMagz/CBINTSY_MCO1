@@ -115,9 +115,24 @@ public class Ouroboros{
         player.takeTurn();
         player.replenishActionPoints();
         
+        processEnemyTurns();
+
         checkEnemyDeath();
 
         checkDoors();
+    }
+
+    public static void processEnemyTurns() {
+        System.out.println("--- Enemy Turns ---");
+        for (Entity entity : entities) {
+            if (entity instanceof EnemyAI) {
+                EnemyAI enemy = (EnemyAI) entity;
+                if (enemy.isAlive()) {
+                    enemy.takeTurn();
+                    enemy.replenishActionPoints();
+                }
+            }
+        }
     }
 
     public static void checkEnemyDeath(){

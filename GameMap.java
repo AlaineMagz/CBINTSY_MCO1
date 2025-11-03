@@ -176,4 +176,16 @@ public class GameMap {
         return this.roomList;
     }
 
+    public int getWidthByRoom(){
+        return this.widthByRoom;
+    }
+
+    public int getHeightByRoom(){
+        return this.heightByRoom;
+    }
+
+    public Room[][] getAllRooms() {
+        return this.roomList;
+    }
+
 }
