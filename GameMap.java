@@ -33,6 +33,9 @@ public class GameMap {
             y = random.nextInt(height);
         }
 
+        x = 0;
+        y = 0;
+        s = 0;
         this.generateRooms(roomWidth, roomHeight, x, y, s);
 
     }
@@ -67,7 +70,7 @@ public class GameMap {
 
                 enemyCount = random.nextInt(3);
                 itemCount = random.nextInt(3);
-                this.roomList[y][x] = new Room(x, y, roomWidth + 2, roomHeight + 2, enemyCount, itemCount, doorDirs, -1);
+                this.roomList[y][x] = new Room(this, x, y, roomWidth + 2, roomHeight + 2, enemyCount, itemCount, doorDirs, -1);
                 doorDirs.clear();
 
             }
@@ -90,7 +93,7 @@ public class GameMap {
             doorDirs.add("right");
         }
 
-        this.roomList[yExitPos][xExitPos] = new Room(xExitPos, yExitPos, roomWidth, roomHeight, 0, 0, doorDirs, exitSide);
+        this.roomList[yExitPos][xExitPos] = new Room(this, xExitPos, yExitPos, roomWidth, roomHeight, 0, 0, doorDirs, exitSide);
         this.exitRoom = this.roomList[yExitPos][xExitPos];
 
     }

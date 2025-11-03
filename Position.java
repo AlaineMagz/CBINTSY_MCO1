@@ -20,7 +20,7 @@ public class Position {
 
         switch(dir){
 
-            case "up": return new Position(this.x, this.x - 1);
+            case "up": return new Position(this.x, this.y - 1);
             case "down": return new Position(this.x, this.y + 1);
             case "left": return new Position(this.x - 1, this.y);
             case "right": return new Position(this.x + 1, this.y);
@@ -40,6 +40,11 @@ public class Position {
 
         return c;
 
+    }
+
+    public String getCoordinates(){
+        String s = "(" + this.x + ", " + this.y + ")";
+        return s;
     }
 
 }

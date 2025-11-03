@@ -24,7 +24,7 @@ public abstract class AI extends Entity{
     }
 
     public boolean isAlive(){
-        return (this.health > 0) ? true : false;
+        return (this.health > 0);
     }
 
     public void heal(int healAmount){
@@ -90,8 +90,19 @@ public abstract class AI extends Entity{
 
         if(attackTile.getEntityType() == "enemy"){
             ((AI) attackTile.getEntity()).takeDamage(damage);
+            System.out.println("ATTACKED ENEMY WITH " + damage + " DAMAGE!");
+            System.out.println("ENEMY HAS " + ((AI) attackTile.getEntity()).getHealth() + " HP LEFT!");
+            System.out.println("ENEMY IS DEAD = " + !((AI) attackTile.getEntity()).isAlive());
         }
 
+    }
+
+    public int getHealth(){
+        return this.health;
+    }
+
+    public int getMaxHealth(){
+        return this.maxHealth;
     }
 
 }

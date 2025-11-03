@@ -19,12 +19,13 @@ public class Tile {
 
     public boolean isWalkable(){
         
-        if(entityType != "empty"){
+        if(this.entityType != "empty" && this.entityType != "item"){
             return false;
         }
         
         switch(type){
             case "floor": return true;
+            case "item": return true;
         }
         return false;
     }
@@ -82,7 +83,7 @@ public class Tile {
 
         }else if(type == "player"){
 
-            //TODO
+            e = new PlayerAI(room, pos, 80, 80, 4, 2, 2, null, this.room.getMap());
 
         }
 

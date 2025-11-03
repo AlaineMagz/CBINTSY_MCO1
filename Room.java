@@ -3,6 +3,7 @@ import java.util.Random;
 
 public class Room {
     
+    private GameMap parentMap;
     private Position roomPos;
     private int width;
     private int height;
@@ -14,8 +15,9 @@ public class Room {
     private int exitSide;
     private Random random = new Random();
 
-    public Room(int x, int y, int width, int height, int enemyCount, int itemCount, ArrayList<String> doorDir, int exitSide){
+    public Room(GameMap map, int x, int y, int width, int height, int enemyCount, int itemCount, ArrayList<String> doorDir, int exitSide){
 
+        this.parentMap = map;
         this.roomPos = new Position(x, y);
         this.width = width;
         this.height = height;
@@ -174,6 +176,18 @@ public class Room {
 
         return this.tileMap[pos.getY()][pos.getX()];
 
+    }
+
+    public int getWidth(){
+        return this.width;
+    }
+
+    public int getHeight(){
+        return this.height;
+    }
+
+    public GameMap getMap(){
+        return this.parentMap;
     }
 
 }
