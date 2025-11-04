@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Scanner;
 
 public class Ouroboros{
@@ -54,7 +54,7 @@ public class Ouroboros{
         }
 
         //Generates Map;
-        map = new GameMap(7, 5, 7, 7);
+        map = new GameMap(2, 2, 5, 5);
         System.out.println("MAP GENERATED");
         entities = map.getAllEntities();
         System.out.println("ENTITIES GENERATED");
@@ -120,6 +120,10 @@ public class Ouroboros{
         checkEnemyDeath();
 
         checkDoors();
+
+        //Display map after turn
+        player.getCurrentRoom().displayRoom();
+
     }
 
     public static void processEnemyTurns() {

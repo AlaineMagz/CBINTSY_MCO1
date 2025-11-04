@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class GameMap {
     
-    private int widthByRoom;
+    private int widthByRoom; 
     private int heightByRoom;
     private Room[][] roomList;
     private Room exitRoom;
@@ -123,32 +123,63 @@ public class GameMap {
 
     }
 
-    public void spawnKey(int xExitPos, int yExitPos, int roomWidth, int roomHeight){
+    public void spawnKey(int xExitPos, int yExitPos, int roomWidth, int roomHeight) {
+    int roomX, roomY;
+    int tileX, tileY;
+    boolean running = true;
+    int attempts = 0;
+    final int MAX_ATTEMPTS = 100; // Prevent infinite loop
 
-        int x;
-        int y;
-        boolean running = true;
+    while (running && attempts < MAX_ATTEMPTS) {
+        attempts++;
+        
+        // Step 1: Pick a random room (excluding exit room)
+        roomX = random.nextInt(this.widthByRoom);
+        roomY = random.nextInt(this.heightByRoom);
 
-        while(running){
-
-            x = random.nextInt(this.widthByRoom);
-            y = random.nextInt(this.heightByRoom);
-
-            if(x != xExitPos && y != yExitPos){
-
-                x = random.nextInt(roomWidth - 4) + 2;
-                y = random.nextInt(roomHeight - 4) + 2;
-                
-                if(this.roomList[y][x].checkTile(new Position(x, y)).getEntityType() == "empty"){
-                    this.roomList[y][x].checkTile(new Position(x, y)).spawnEntity("key");
-                    running = false;
-                }
-                
+        if (roomX != xExitPos || roomY != yExitPos) {
+            
+            // Step 2: Pick a random tile position within that room
+            // Use roomWidth and roomHeight for bounds (subtract 2 for walls)
+            tileX = random.nextInt(roomWidth - 4) + 2;  // Avoid walls
+            tileY = random.nextInt(roomHeight - 4) + 2; // Avoid walls
+            
+            Room targetRoom = this.roomList[roomY][roomX];
+            Tile targetTile = targetRoom.checkTile(new Position(tileX, tileY));
+            
+            // Step 3: Check if the tile is empty and walkable
+            if (targetTile.getEntityType().equals("empty") && targetTile.isWalkable()) {
+                targetTile.spawnEntity("key");
+                System.out.println("Key spawned in room (" + roomX + "," + roomY + ") at position (" + tileX + "," + tileY + ")");
+                running = false;
+                return;
             }
-
         }
-
     }
+    
+    // Fallback: if we can't find a spot after many attempts, place in a predetermined location
+    System.out.println("Warning: Could not find optimal key location after " + MAX_ATTEMPTS + " attempts. Using fallback.");
+    
+    // Find any non-exit room and place key in center
+    for (roomY = 0; roomY < this.heightByRoom; roomY++) {
+        for (roomX = 0; roomX < this.widthByRoom; roomX++) {
+            if (roomX != xExitPos || roomY != yExitPos) {
+                tileX = roomWidth / 2;
+                tileY = roomHeight / 2;
+                Room targetRoom = this.roomList[roomY][roomX];
+                Tile targetTile = targetRoom.checkTile(new Position(tileX, tileY));
+                
+                if (targetTile.isWalkable()) {
+                    targetTile.spawnEntity("key");
+                    System.out.println("Key placed in fallback location: room (" + roomX + "," + roomY + ")");
+                    return;
+                }
+            }
+        }
+    }
+    
+    System.out.println("Error: Could not place key anywhere!");
+}
 
     public Room getExitRoom(){
         return this.exitRoom;

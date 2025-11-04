@@ -1,7 +1,7 @@
 public class Consumable extends Item{
     
     private int restoreHealth;
-    private int attackBoost;
+    private int attackBoost; 
 
     public Consumable(Room currentRoom, Position pos, String name, String description, int rH, int aB){
 

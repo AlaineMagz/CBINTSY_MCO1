@@ -3,7 +3,7 @@ public class EnemyAI extends AI {
     private String type;
     private String behavior;
     private boolean isHostile;
-    private PlayerAI targetPlayer;
+    private PlayerAI targetPlayer; 
 
     public EnemyAI(Room currentRoom, Position pos, int hp, int maxHP, int aS, int ap, int maxAP, String type, String behavior) {
         super(currentRoom, pos, hp, maxHP, aS, ap, maxAP, "up");
@@ -134,6 +134,9 @@ public class EnemyAI extends AI {
                 moveForward();
                 System.out.println(this.type + " moves toward player");
             }
+        } else if (frontTile.getEntityType().equals("player")){
+            attack(getBaseAttackStat());
+            System.out.println(this.type + " attacks player!");
         } else {
             // Can't move in preferred direction, try alternatives
             tryAlternativeDirections();

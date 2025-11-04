@@ -11,7 +11,7 @@ public abstract class AI extends Entity{
 
         super(currentRoom, pos);
         this.health = hp;
-        this.maxHealth = maxHP;
+        this.maxHealth = maxHP; 
         this.attackStat = aS;
         this.actionPoints = ap;
         this.maxAP = maxAP;
@@ -72,6 +72,8 @@ public abstract class AI extends Entity{
         Tile currentTile = this.getCurrentRoom().checkTile(this.getPosition());
         Tile newTile = this.getCurrentRoom().checkTile(this.getPosition().getAdjacent(facingDirection));
 
+        
+
         currentTile.clearTile();
         newTile.setEntity(this);
 
@@ -87,8 +89,11 @@ public abstract class AI extends Entity{
     public void attack(int damage){
 
         Tile attackTile = this.getCurrentRoom().checkTile(this.getPosition().getAdjacent(facingDirection));
+        if(attackTile == null || attackTile.getEntity() == null){
+            System.out.println("No target in front!");
+        }
 
-        if(attackTile.getEntityType() == "enemy"){
+        if(attackTile.getEntityType().equals("enemy")){
             ((AI) attackTile.getEntity()).takeDamage(damage);
             System.out.println("ATTACKED ENEMY WITH " + damage + " DAMAGE!");
             System.out.println("ENEMY HAS " + ((AI) attackTile.getEntity()).getHealth() + " HP LEFT!");

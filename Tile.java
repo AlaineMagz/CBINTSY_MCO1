@@ -3,7 +3,7 @@ import java.util.Random;
 public class Tile {
     
     private Room room;
-    private Position pos;
+    private Position pos; 
     private String type;
     private String entityType;
     private Entity entity;
@@ -19,7 +19,7 @@ public class Tile {
 
     public boolean isWalkable(){
         
-        if(this.entityType != "empty" && this.entityType != "item"){
+        if(!entityType.equals("empty") && !entityType.equals("item")){
             return false;
         }
         
@@ -41,11 +41,11 @@ public class Tile {
             r = random.nextInt(3);
 
             if(r == 0){
-                e = new EnemyAI(room, pos, 15, 15, 10, 1, 1, "Walker", "mobile");
+                e = new EnemyAI(room, pos, 15, 15, 5, 1, 1, "Walker", "mobile");
             }else if(r == 1){
-                e = new EnemyAI(room, pos, 25, 25, 12, 1, 1, "Anchored", "immobile");
+                e = new EnemyAI(room, pos, 25, 25, 6, 1, 1, "Anchored", "immobile");
             }else if(r == 2){
-                e = new EnemyAI(room, pos, 20, 20, 18, 1, 1, "Brawler", "mobile");
+                e = new EnemyAI(room, pos, 20, 20, 9, 1, 1, "Brawler", "mobile");
             }
 
         }else if(type == "item"){
@@ -82,11 +82,11 @@ public class Tile {
 
             }
 
-        }else if(type == "player"){
+        }else if("player".equals(type)){
 
             e = new PlayerAI(room, pos, 80, 80, 4, 2, 2, null, this.room.getMap());
 
-        }else if(type == "key"){
+        }else if("key".equals(type)){
 
             e = new Consumable(room, pos, "Key", "Key used for escaping the dungeon.", 0, 0);
 

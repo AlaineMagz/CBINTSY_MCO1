@@ -1,6 +1,6 @@
 public abstract class Entity {
     
-    private Room currentRoom;
+    private Room currentRoom; 
     private Position position;
 
     public Entity(Room currentRoom, Position pos){

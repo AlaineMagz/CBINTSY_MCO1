@@ -2,7 +2,7 @@ import java.util.*;
 
 public class GameSense {
     private GameMap gameMap;
-    private PlayerAI player;
+    private PlayerAI player; 
     
     public GameSense(GameMap gameMap, PlayerAI player) {
         this.gameMap = gameMap;
@@ -301,6 +301,33 @@ public class GameSense {
         return findNearestThing("item");
     }
     
+    public SenseData findNearestItemOfType(String typeName) {
+    Room room = player.getCurrentRoom();
+    double bestDist = Double.MAX_VALUE;
+    SenseData best = null;
+
+    for (int y = 0; y < room.getHeight(); y++) {
+        for (int x = 0; x < room.getWidth(); x++) {
+            Tile tile = room.checkTile(new Position(x, y));
+            if ("item".equals(tile.getEntityType()) && tile.getEntity() instanceof Item) {
+                Item item = (Item) tile.getEntity();
+                if (item.getItemName().equalsIgnoreCase(typeName)) {
+                    double dist = player.getPosition().distanceTo(tile.getPos());
+                    if (dist < bestDist) {
+                        bestDist = dist;
+                        best = new SenseData();
+                        best.hasItem = true;
+                        best.position = tile.getPos();
+                        best.whatIsIt = "item";
+                    }
+                }
+            }
+        }
+    }
+    return best;
+}
+
+    
     private SenseData findNearestThing(String targetType) {
         SenseData result = new SenseData();
         Room currentRoom = player.getCurrentRoom();
@@ -432,14 +459,28 @@ public class GameSense {
         return path;
     }
     
-    public void printGameInfo() {
-        System.out.println("=== GAME INFO ===");
-        System.out.println("Health: " + player.getHealth() + "/" + player.getMaxHealth());
-        System.out.println("Position: (" + player.getPosition().getX() + "," + player.getPosition().getY() + ")");
-        System.out.println("Facing: " + player.getDirection() + " -> " + this.player.getPosition().getAdjacent(this.player.getDirection()).getCoordinates());
-        
-        SenseData front = checkFront();
-        System.out.println("In front: " + front.whatIsIt);
+   public void printGameInfo() {
+    System.out.println("=== GAME INFO ===");
+    System.out.println("Health: " + player.getHealth() + "/" + player.getMaxHealth());
+    System.out.println("Position: (" + player.getPosition().getX() + "," + player.getPosition().getY() + ")");
+    System.out.println("Facing: " + player.getDirection() + " -> " + this.player.getPosition().getAdjacent(this.player.getDirection()).getCoordinates());
+    
+    // Add inventory info
+    System.out.println("Inventory: " + player.getInventory().size() + " items");
+    if (!player.getInventory().isEmpty()) {
+        System.out.print("Items: ");
+        for (Item item : player.getInventory()) {
+            System.out.print(item.getItemName() + ", ");
+        }
+        System.out.println();
+    }
+    
+    // Add key status
+    System.out.println("Has Key: " + player.hasKey());
+    
+    SenseData front = checkFront();
+    System.out.println("In front: " + front.whatIsIt);
+    
         
         // Room Sense information
         System.out.println("Room Sense: " + getRoomSense());

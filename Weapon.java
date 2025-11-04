@@ -1,6 +1,6 @@
 public class Weapon extends Item{
     
-    private int damage;
+    private int damage; 
 
     public Weapon(Room currentRoom, Position pos, String name, String description, int damage){
 

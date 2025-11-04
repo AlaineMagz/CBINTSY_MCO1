@@ -10,7 +10,7 @@ public abstract class Item extends Entity{
         this.name = name;
         this.description = description;
         this.type = type;
-
+ 
     }
 
     public String getItemName(){
