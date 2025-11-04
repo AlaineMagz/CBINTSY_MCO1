@@ -219,4 +219,23 @@ public class Room {
         return this.parentMap;
     }
 
+    public void refreshHasEntities(){
+
+        this.hasEnemies = false;
+        this.hasItems = false;
+
+        for(Entity e : this.entityList){
+
+            if(e instanceof EnemyAI){
+                this.hasEnemies = true;
+            }
+
+            if(e instanceof Item){
+                this.hasItems = true;
+            }
+
+        }
+
+    }
+
 }

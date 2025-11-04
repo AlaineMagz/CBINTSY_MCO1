@@ -173,6 +173,7 @@ public class PlayerAI extends AI {
                 
             case "COLLECT_ITEMS_IN_ROOM":
                 GameSense.SenseData item = gameSense.findNearestItem();
+                System.out.println(item.position.getCoordinates());
                 if (item != null && item.hasItem && item.position != null) {
                     moveToward(item.position);
                 } else {
@@ -522,11 +523,14 @@ public class PlayerAI extends AI {
             Position nextStep = path.get(1);
             String direction = gameSense.getDirectionTo(nextStep);
             setDirection(direction);
+            System.out.println("GOING TO " + nextStep.getCoordinates() + "! TURNING TO " + direction);
             
             GameSense.SenseData front = gameSense.checkFront();
             if (!"enemy".equals(front.whatIsIt) && !"wall".equals(front.whatIsIt)) {
                 moveForward();
             }
+        }else{
+            System.out.println("PATH SIZE IS 1");
         }
     }
     

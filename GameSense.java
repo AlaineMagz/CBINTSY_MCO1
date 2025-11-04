@@ -374,9 +374,8 @@ public class GameSense {
         
         while (!queue.isEmpty()) {
             Position current = queue.poll();
-            
-            if (current.equals(target)) {
-                return buildPath(cameFrom, target);
+            if (current.getX() == target.getX() && current.getY() == target.getY()) {
+                return buildPath(cameFrom, start, target);
             }
             
             for (Position neighbor : getWalkableNeighbors(current, currentRoom)) {
@@ -447,16 +446,36 @@ public class GameSense {
         return neighbors;
     }
     
-    private ArrayList<Position> buildPath(Map<Position, Position> cameFrom, Position target) {
+    private ArrayList<Position> buildPath(Map<Position, Position> cameFrom, Position start, Position target) {
         ArrayList<Position> path = new ArrayList<>();
         Position current = target;
-        
+
         while (current != null) {
             path.add(0, current);
-            current = cameFrom.get(current);
+            current = getValueFromKey(cameFrom, current);
         }
         
         return path;
+    }
+
+    public Position getValueFromKey(Map<Position, Position> map, Position p){
+
+        Position found = null;
+
+        for(Map.Entry<Position, Position> m : map.entrySet()){
+
+            if(m.getKey() != null){
+                System.out.println(m.getKey().getCoordinates() + " == " + p.getCoordinates());
+                if(m.getKey().getCoordinates().equals(p.getCoordinates())){
+                    found = m.getValue();
+                    break;
+                }
+            }
+
+        }
+
+        return found;
+
     }
     
    public void printGameInfo() {

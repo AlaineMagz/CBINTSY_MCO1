@@ -120,6 +120,8 @@ public class Tile {
 
     public void clearTile(){
         this.entityType = "empty";
+        this.room.getEntityList().remove(this.entity);
+        this.room.refreshHasEntities();
         this.entity = null;
     }
 

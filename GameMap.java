@@ -66,8 +66,8 @@ public class GameMap {
                     doorDirs.add("right");
                 }
 
-                enemyCount = random.nextInt(3);
-                itemCount = random.nextInt(3);
+                enemyCount = random.nextInt(2);
+                itemCount = random.nextInt(4);
                 this.roomList[y][x] = new Room(this, x, y, roomWidth + 2, roomHeight + 2, enemyCount, itemCount, doorDirs, -1);
                 doorDirs.clear();
 
@@ -149,7 +149,7 @@ public class GameMap {
             
             // Step 3: Check if the tile is empty and walkable
             if (targetTile.getEntityType().equals("empty") && targetTile.isWalkable()) {
-                targetTile.spawnEntity("key");
+                targetRoom.getEntityList().add(targetTile.spawnEntity("key"));
                 System.out.println("Key spawned in room (" + roomX + "," + roomY + ") at position (" + tileX + "," + tileY + ")");
                 running = false;
                 return;
